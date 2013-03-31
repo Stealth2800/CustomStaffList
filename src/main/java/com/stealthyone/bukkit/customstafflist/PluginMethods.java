@@ -51,6 +51,7 @@ public final class PluginMethods {
 		plugin.getLog().debug("keys: " + Arrays.toString(keys));
 		
 		List<String> returnList = new ArrayList<String>();
+		List<String> addedPlayers = new ArrayList<String>();
 		
 		for (int i = 0; i < values.size(); i++) {
 			String groupName = keys[i].toString();
@@ -58,8 +59,9 @@ public final class PluginMethods {
 			List<String> applicablePlayers = new ArrayList<String>();
 			for (int j = 0; j < onlinePlayers.length; j++) {
 				if (onlinePlayers[j].hasPermission(permissionToCheck)) {
-					if (!plugin.getMethods().isVanished(onlinePlayers[j].getName())) {
+					if (!plugin.getMethods().isVanished(onlinePlayers[j].getName()) && !addedPlayers.contains(onlinePlayers[j].getName())) {
 						applicablePlayers.add(onlinePlayers[j].getName());
+						addedPlayers.add(onlinePlayers[j].getName());
 					}
 				}
 			}

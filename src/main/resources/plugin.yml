@@ -1,6 +1,6 @@
 name: CustomStaffList
 main: com.stealthyone.bukkit.customstafflist.BasePlugin
-version: 1.0.1
+version: 1.1
 website: http://stealthyone.com/bukkit
 description: Simple way to display a list of the staff on the server
 author: Stealth2800
