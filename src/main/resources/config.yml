@@ -4,10 +4,10 @@ Check for updates: true
 Limit player appearance to one group: true
 Hide vanished players: true
 Format:
-  Header: ''
+  Header: '&8<============================>'
   Name: '&8----&6Online Staff Members&8----'
   GroupName: '&6[%groupname%&6]&f'
-  Footer: ''
+  Footer: '&8<============================>'
   No online staff message: '&c&oNo online staff.'
   No online group members message: '&c&oNone online.'
   Use player display name: false
