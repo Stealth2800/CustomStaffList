@@ -1,11 +1,11 @@
 name: CustomStaffList
-main: com.stealthyone.bukkit.customstafflist.BasePlugin
-version: 1.1
-website: http://stealthyone.com/bukkit
-description: Simple way to display a list of the staff on the server
 author: Stealth2800
+version: 2.0
+website: http://stealthyone.com/bukkit
+description: Simple way to display a list of the staff on the server.
+main: com.stealthyone.bukkit.customstafflist.CustomStaffList
 commands:
   stafflist:
     description: 'Base plugin command'
-    usage: '/stafflist'
-    aliases: [staff,sl,stlist]
+    usage: '/<command>'
+    aliases: [staff,sl,stlist,stafflist,modlist]
