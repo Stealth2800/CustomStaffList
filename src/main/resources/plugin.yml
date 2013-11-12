@@ -1,11 +1,11 @@
 name: CustomStaffList
+version: 2.1
+description: Simple way to display lists of players on the server
+depend: [StBukkitLib]
+softdepend: [VanishNoPacket]
 author: Stealth2800
-version: 2.0
 website: http://stealthyone.com/bukkit
-description: Simple way to display a list of the staff on the server.
-main: com.stealthyone.bukkit.customstafflist.CustomStaffList
+main: com.stealthyone.mcb.customstafflist.CustomStaffList
 commands:
-  stafflist:
+  customstafflist:
     description: 'Base plugin command'
-    usage: '/<command>'
-    aliases: [staff,sl,stlist,stafflist,modlist]

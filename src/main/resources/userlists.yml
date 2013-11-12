@@ -1,0 +1,49 @@
+Staff:
+  aliases:
+    - stafflist
+    - staff
+    - modlist
+  Groups:
+    Admin:
+      display name: 'Admin'
+      color: RED
+      permission: 'customstafflist.group.admin'
+      ignore op: true
+      name color: YELLOW
+    Moderator:
+      display name: 'Mod'
+      color: GREEN
+      permission: 'customstafflist.group.mod'
+      ignore op = true
+      name color: BLUE
+  Format:
+    header: '&8<============================>'
+    name: '&8------&6Online Staff Members&8------'
+    group format: '&6[{GROUPNAME}&6]&f '
+    footer: '&8<============================>'
+    none online message: '&c&oNone online.'
+    use player display names: false
+    limit players to one group: true
+Donors:
+  aliases:
+    - donorlist
+    - donors
+  Groups:
+    Donor1:
+      display name: '$5 donor'
+      color: GREEN
+      ignore op = true
+      permission: 'customstafflist.group.donor1'
+    Donor2:
+      display name: '$10 donor'
+      color: BLUE
+      ignore op = true
+      permission: 'customstafflist.group.donor2'
+  Format:
+    header: '&8<============================>'
+    name: '&8-------&6Online Donors&8-------'
+    group format: '&6[{GROUPNAME}&6]&f '
+    footer: '&8<============================>'
+    none online message: '&c&oNone online.'
+    use player display names: false
+    limit players to one group: true

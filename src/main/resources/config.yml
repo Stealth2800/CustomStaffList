@@ -1,23 +1,4 @@
 #CustomStaffList Configuration
 Debug: false
 Check for updates: true
-Limit player appearance to one group: true
 Hide vanished players: true
-Format:
-  Header: '&8<============================>'
-  Name: '&8----&6Online Staff Members&8----'
-  GroupName: '&6[%groupname%&6]&f'
-  Footer: '&8<============================>'
-  No online staff message: '&c&oNo online staff.'
-  No online group members message: '&c&oNone online.'
-  Use player display name: false
-  Show groups with no one on: true
-Groups:
-  Administrator:
-    display name: 'Admin'
-    color: '&c'
-    permission: 'customstafflist.admin'
-  Moderator:
-    display name: 'Mod'
-    color: '&a'
-    permission: 'customstafflist.moderator'

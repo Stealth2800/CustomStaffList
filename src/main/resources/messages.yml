@@ -1,0 +1,3 @@
+messages:
+  notices:
+    plugin_reloaded: '{TAG}&aPlugin files reloaded from the disk.'
