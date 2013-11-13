@@ -26,6 +26,7 @@ import org.bukkit.command.CommandSender;
 
 public enum ErrorMessage implements IMessagePath {
 
+    INVALID_USERLIST,
 	NO_PERMISSION;
 	
 	private final String PREFIX = "messages.errors.";

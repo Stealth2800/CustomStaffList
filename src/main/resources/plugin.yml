@@ -1,5 +1,5 @@
 name: CustomStaffList
-version: 2.1
+version: 2.2
 description: Simple way to display lists of players on the server
 depend: [StBukkitLib]
 softdepend: [VanishNoPacket]

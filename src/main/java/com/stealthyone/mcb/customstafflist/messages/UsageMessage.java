@@ -23,7 +23,7 @@ import org.bukkit.command.CommandSender;
 
 public enum UsageMessage {
 
-    TEMP("/%s temp");
+    STAFFLIST_LIST("/%s list <list alias>");
 	
 	private String message;
 	

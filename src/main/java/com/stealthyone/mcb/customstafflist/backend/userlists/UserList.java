@@ -67,6 +67,10 @@ public class UserList {
         }
     }
 
+    public String getPermission() {
+        return config.getString("permission");
+    }
+
     public List<String> constructList() {
         List<String> returnList = new ArrayList<String>();
         Player[] onlinePlayers = Bukkit.getOnlinePlayers();

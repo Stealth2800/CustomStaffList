@@ -47,10 +47,12 @@ public enum PermissionNode {
     }
 
     public final static boolean checkCustomPermission(String customPerm, CommandSender sender) {
+        if (customPerm == null || customPerm.equalsIgnoreCase("")) return true;
         return sender.hasPermission(customPerm);
     }
 
     public final static boolean checkCustomPermission(String customPerm, CommandSender sender, boolean ignoreOp) {
+        if (customPerm == null || customPerm.equalsIgnoreCase("")) return true;
         return ignoreOp ? sender.hasPermission(new Permission(customPerm, PermissionDefault.FALSE)) : checkCustomPermission(customPerm, sender);
     }
 

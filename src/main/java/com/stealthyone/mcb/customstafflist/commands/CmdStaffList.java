@@ -20,10 +20,10 @@ package com.stealthyone.mcb.customstafflist.commands;
 
 import com.stealthyone.mcb.customstafflist.CustomStaffList;
 import com.stealthyone.mcb.customstafflist.backend.userlists.UserList;
+import com.stealthyone.mcb.customstafflist.messages.ErrorMessage;
 import com.stealthyone.mcb.customstafflist.messages.NoticeMessage;
+import com.stealthyone.mcb.customstafflist.messages.UsageMessage;
 import com.stealthyone.mcb.customstafflist.permissions.PermissionNode;
-import com.stealthyone.mcb.stbukkitlib.lib.updates.UpdateChecker;
-import com.stealthyone.mcb.stbukkitlib.messages.ErrorMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -42,6 +42,11 @@ public final class CmdStaffList implements CommandExecutor {
         if (label.equalsIgnoreCase("customstafflist")) {
             if (args.length > 0) {
                 switch (args[0]) {
+                    /* View Userlist command */
+                    case "list":
+                        cmdList(sender, cmd, label, args);
+                        return true;
+
                     /* Reload command */
                     case "reload":
                         cmdReload(sender, cmd, label, args);
@@ -57,11 +62,35 @@ public final class CmdStaffList implements CommandExecutor {
             UserList userList = plugin.getUserListBackend().getUserList(label);
             if (userList == null) {
                 sender.sendMessage(ChatColor.RED + "ERROR - you shouldn't be seeing this...");
+            } else if (!PermissionNode.checkCustomPermission(userList.getPermission(), sender)) {
+                ErrorMessage.NO_PERMISSION.sendTo(sender);
             } else {
                 for (String message : userList.constructList()) sender.sendMessage(message);
             }
         }
         return true;
+    }
+
+    /**
+     * List Userlist command
+     * @param sender
+     * @param command
+     * @param label
+     * @param args
+     */
+    private void cmdList(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length < 2) {
+            UsageMessage.STAFFLIST_LIST.sendTo(sender, label);
+        } else {
+            UserList list = plugin.getUserListBackend().getUserList(args[1]);
+            if (list == null) {
+                ErrorMessage.INVALID_USERLIST.sendTo(sender, args[1]);
+            } else if (!PermissionNode.checkCustomPermission(list.getPermission(), sender)) {
+                ErrorMessage.NO_PERMISSION.sendTo(sender);
+            } else {
+                for (String message : list.constructList()) sender.sendMessage(message);
+            }
+        }
     }
 
     /**
@@ -91,13 +120,13 @@ public final class CmdStaffList implements CommandExecutor {
         sender.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GOLD + " v" + plugin.getVersion());
         sender.sendMessage(ChatColor.GOLD + "Created by Stealth2800");
         sender.sendMessage(ChatColor.GOLD + "Website: " + ChatColor.AQUA + "http://stealthyone.com/bukkit");
-        UpdateChecker updateChecker = plugin.getUpdateChecker();
-        if (updateChecker.checkForUpdates(false)) {
-            String curVer = plugin.getVersion();
-            String remVer = updateChecker.getNewVersion();
+        /*Updater updateChecker = plugin.getUpdater();
+        if (updateChecker.getResult() == UpdateResult.UPDATE_AVAILABLE) {
+            String curVer = plugin.getDescription().getVersion();
+            String remVer = updateChecker.getLatestName().replace("v", "");
             sender.sendMessage(ChatColor.RED + "A different version was found on BukkitDev! (Current: " + curVer + " | Remote: " + remVer + ")");
-            sender.sendMessage(ChatColor.RED + "You can download it from " + updateChecker.getVersionLink());
-        }
+            sender.sendMessage(ChatColor.RED + "You can download it from " + updateChecker.getLatestFileLink());
+        }*/
     }
 
 }

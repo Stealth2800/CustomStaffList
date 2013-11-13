@@ -3,6 +3,7 @@ Staff:
     - stafflist
     - staff
     - modlist
+  permission: customstafflist.list.staff
   Groups:
     Admin:
       display name: 'Admin'
@@ -28,6 +29,7 @@ Donors:
   aliases:
     - donorlist
     - donors
+  permission: customstafflist.list.donors
   Groups:
     Donor1:
       display name: '$5 donor'
