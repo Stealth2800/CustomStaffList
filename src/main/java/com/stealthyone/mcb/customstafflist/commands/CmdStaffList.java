@@ -24,6 +24,7 @@ import com.stealthyone.mcb.customstafflist.messages.ErrorMessage;
 import com.stealthyone.mcb.customstafflist.messages.NoticeMessage;
 import com.stealthyone.mcb.customstafflist.messages.UsageMessage;
 import com.stealthyone.mcb.customstafflist.permissions.PermissionNode;
+import com.stealthyone.mcb.stbukkitlib.lib.updates.UpdateChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -54,6 +55,7 @@ public final class CmdStaffList implements CommandExecutor {
 
                     /* Version command */
                     case "version":
+                        cmdVersion(sender, cmd, label, args);
                         break;
                 }
             }
@@ -120,13 +122,13 @@ public final class CmdStaffList implements CommandExecutor {
         sender.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GOLD + " v" + plugin.getVersion());
         sender.sendMessage(ChatColor.GOLD + "Created by Stealth2800");
         sender.sendMessage(ChatColor.GOLD + "Website: " + ChatColor.AQUA + "http://stealthyone.com/bukkit");
-        /*Updater updateChecker = plugin.getUpdater();
-        if (updateChecker.getResult() == UpdateResult.UPDATE_AVAILABLE) {
-            String curVer = plugin.getDescription().getVersion();
-            String remVer = updateChecker.getLatestName().replace("v", "");
+        UpdateChecker updateChecker = plugin.getUpdateChecker();
+        if (updateChecker.checkForUpdates()) {
+            String curVer = plugin.getVersion();
+            String remVer = updateChecker.getNewVersion().replace("v", "");
             sender.sendMessage(ChatColor.RED + "A different version was found on BukkitDev! (Current: " + curVer + " | Remote: " + remVer + ")");
-            sender.sendMessage(ChatColor.RED + "You can download it from " + updateChecker.getLatestFileLink());
-        }*/
+            sender.sendMessage(ChatColor.RED + "You can download it from " + updateChecker.getVersionLink());
+        }
     }
 
 }

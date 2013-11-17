@@ -24,6 +24,7 @@ import com.stealthyone.mcb.customstafflist.config.ConfigHelper;
 import com.stealthyone.mcb.customstafflist.listeners.PlayerListener;
 import com.stealthyone.mcb.stbukkitlib.lib.hooks.HookHelper;
 import com.stealthyone.mcb.stbukkitlib.lib.messages.MessageRetriever;
+import com.stealthyone.mcb.stbukkitlib.lib.updates.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -66,6 +67,7 @@ public class CustomStaffList extends JavaPlugin {
     private boolean vanishHook;
 
     private MessageRetriever messageManager;
+    private UpdateChecker updateChecker;
 
     private UserListBackend userListBackend;
 
@@ -111,7 +113,7 @@ public class CustomStaffList extends JavaPlugin {
 
         /* Register commands */
         getCommand("customstafflist").setExecutor(new CmdStaffList(this));
-
+        updateChecker = UpdateChecker.scheduleForMe(this, 54231);
         Log.info(String.format("%s v%s by Stealth2800 enabled.", getName(), getVersion()));
     }
 
@@ -131,6 +133,10 @@ public class CustomStaffList extends JavaPlugin {
 
     public MessageRetriever getMessageManager() {
         return messageManager;
+    }
+
+    public UpdateChecker getUpdateChecker() {
+        return updateChecker;
     }
 
     public UserListBackend getUserListBackend() {
