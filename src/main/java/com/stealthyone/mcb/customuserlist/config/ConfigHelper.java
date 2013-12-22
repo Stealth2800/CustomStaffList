@@ -16,26 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.customstafflist.config;
+package com.stealthyone.mcb.customuserlist.config;
 
-import com.stealthyone.mcb.customstafflist.CustomStaffList;
+public final class ConfigHelper {
 
-public enum ConfigBoolean {
-
-    CHECK_FOR_UPDATES("Check for updates"),
-    DEBUG("Debug"),
-    HIDE_VANISHED("Hide vanished players"),
-    SHOW_EMPTY_GROUPS("Format.Show groups with no one on"),
-    USE_PLAYER_DISP_NAME("Format.Use player display name");
-
-    private String path;
-
-    private ConfigBoolean(String path) {
-        this.path = path;
-    }
-
-    public final boolean getBoolean() {
-        return CustomStaffList.getInstance().getConfig().getBoolean(path);
-    }
+    public final static ConfigBoolean DEBUG = ConfigBoolean.DEBUG;
+    public final static ConfigBoolean CHECK_FOR_UPDATES = ConfigBoolean.CHECK_FOR_UPDATES;
+    public final static ConfigBoolean HIDE_VANISHED = ConfigBoolean.HIDE_VANISHED;
+    public final static ConfigBoolean SHOW_EMPTY_GROUPS = ConfigBoolean.SHOW_EMPTY_GROUPS;
+    public final static ConfigBoolean USE_PLAYER_DISP_NAME = ConfigBoolean.USE_PLAYER_DISP_NAME;
 
 }

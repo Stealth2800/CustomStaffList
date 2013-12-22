@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.customstafflist.backend.userlists;
+package com.stealthyone.mcb.customuserlist.backend.userlists;
 
-import com.stealthyone.mcb.customstafflist.CustomStaffList.Log;
-import com.stealthyone.mcb.customstafflist.backend.hooks.VanishHelper;
-import com.stealthyone.mcb.customstafflist.permissions.PermissionNode;
+import com.stealthyone.mcb.customuserlist.CustomStaffList.Log;
+import com.stealthyone.mcb.customuserlist.backend.hooks.VanishHelper;
+import com.stealthyone.mcb.customuserlist.permissions.PermissionNode;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;

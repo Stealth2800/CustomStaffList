@@ -1,7 +1,7 @@
 /*
- *               CustomStaffList - Bukkit Plugin
+ *               The Building Game - Bukkit Plugin
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- *              Website: <http://stealthyone.com/>
+ *               Website: <http://stealthyone.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.customstafflist.config;
+package com.stealthyone.mcb.customuserlist.messages;
 
-public final class ConfigHelper {
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 
-    public final static ConfigBoolean DEBUG = ConfigBoolean.DEBUG;
-    public final static ConfigBoolean CHECK_FOR_UPDATES = ConfigBoolean.CHECK_FOR_UPDATES;
-    public final static ConfigBoolean HIDE_VANISHED = ConfigBoolean.HIDE_VANISHED;
-    public final static ConfigBoolean SHOW_EMPTY_GROUPS = ConfigBoolean.SHOW_EMPTY_GROUPS;
-    public final static ConfigBoolean USE_PLAYER_DISP_NAME = ConfigBoolean.USE_PLAYER_DISP_NAME;
+public enum UsageMessage {
 
+    STAFFLIST_LIST("/%s list <list alias>");
+	
+	private String message;
+	
+	private UsageMessage(String message) {
+		this.message = message;
+	}
+	
+	public final void sendTo(CommandSender sender, String label) {
+		sender.sendMessage(ChatColor.DARK_RED + "USAGE: " + ChatColor.RED + String.format(message, label));
+	}
+	
 }

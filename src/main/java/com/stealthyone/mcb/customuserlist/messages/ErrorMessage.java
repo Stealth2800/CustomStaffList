@@ -16,28 +16,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.customstafflist.messages;
+package com.stealthyone.mcb.customuserlist.messages;
 
-import com.stealthyone.mcb.customstafflist.CustomStaffList;
+import com.stealthyone.mcb.customuserlist.CustomStaffList;
 import com.stealthyone.mcb.stbukkitlib.lib.messages.IMessagePath;
 import com.stealthyone.mcb.stbukkitlib.lib.messages.MessageRetriever;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-public enum NoticeMessage implements IMessagePath {
+public enum ErrorMessage implements IMessagePath {
 
-    PLUGIN_RELOADED;
-
-	private final String PREFIX = "messages.notices.";
+    INVALID_USERLIST,
+	NO_PERMISSION;
+	
+	private final String PREFIX = "messages.errors.";
 	
 	private String path;
 	private boolean isList;
 	
-	private NoticeMessage() {
+	private ErrorMessage() {
 		this(false);
 	}
 	
-	private NoticeMessage(boolean isList) {
+	private ErrorMessage(boolean isList) {
 		this.path = this.toString().toLowerCase();
 		this.isList = isList;
 	}
@@ -56,24 +57,17 @@ public enum NoticeMessage implements IMessagePath {
 	public final boolean isList() {
 		return this.isList;
 	}
-
-    public final String getMessage() {
-        MessageRetriever messageRetriever = CustomStaffList.getInstance().getMessageManager();
-        String[] messages = messageRetriever.getMessage(this);
-        return messages[0];
-    }
-
-    public final String getMessage(String... replacements) {
-        MessageRetriever messageRetriever = CustomStaffList.getInstance().getMessageManager();
-        String[] messages = messageRetriever.getMessage(this);
-        return String.format(messages[0].replace("{TAG}", messageRetriever.getTag()), replacements);
-    }
-
+	
+	public final String getFirstLine() {
+		return CustomStaffList.getInstance().getMessageManager().getMessage(this)[0];
+	}
+	
 	public final void sendTo(CommandSender sender) {
 		MessageRetriever messageRetriever = CustomStaffList.getInstance().getMessageManager();
 		String[] messages = messageRetriever.getMessage(this);
 		
 		for (String message : messages) {
+			message = ChatColor.RED + message;
 			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message.replace("{TAG}", messageRetriever.getTag())));
 		}
 	}
@@ -83,7 +77,8 @@ public enum NoticeMessage implements IMessagePath {
 		String[] messages = messageRetriever.getMessage(this);
 		
 		for (String message : messages) {
-			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(message.replace("{TAG}", messageRetriever.getTag()), (Object[]) replacements)));
+			message = ChatColor.RED + message;
+			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', ChatColor.RED + String.format(message.replace("{TAG}", messageRetriever.getTag()), (Object[]) replacements)));
 		}
 	}
 	

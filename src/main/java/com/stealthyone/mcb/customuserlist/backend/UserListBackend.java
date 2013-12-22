@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.customstafflist.backend;
+package com.stealthyone.mcb.customuserlist.backend;
 
-import com.stealthyone.mcb.customstafflist.CustomStaffList;
-import com.stealthyone.mcb.customstafflist.CustomStaffList.Log;
-import com.stealthyone.mcb.customstafflist.backend.userlists.UserList;
+import com.stealthyone.mcb.customuserlist.CustomStaffList;
+import com.stealthyone.mcb.customuserlist.CustomStaffList.Log;
+import com.stealthyone.mcb.customuserlist.backend.userlists.UserList;
 import com.stealthyone.mcb.stbukkitlib.lib.storage.YamlFileManager;
 import com.stealthyone.mcb.stbukkitlib.lib.utils.FileUtils;
 import org.bukkit.command.PluginCommand;
@@ -58,7 +58,7 @@ public class UserListBackend {
         registeredAliases.clear();
         loadedUserLists.clear();
         FileConfiguration userlistConfig = userlistFile.getConfig();
-        PluginCommand command = plugin.getCommand("customstafflist");
+        PluginCommand command = plugin.getCommand("customuserlist");
         command.getAliases().clear();
         for (String listName : userlistConfig.getKeys(false)) {
             UserList list = new UserList(userlistConfig.getConfigurationSection(listName));

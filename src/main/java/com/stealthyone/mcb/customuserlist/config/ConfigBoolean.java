@@ -1,7 +1,7 @@
 /*
- *               The Building Game - Bukkit Plugin
+ *               CustomStaffList - Bukkit Plugin
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- *               Website: <http://stealthyone.com>
+ *              Website: <http://stealthyone.com/>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,23 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.customstafflist.messages;
+package com.stealthyone.mcb.customuserlist.config;
 
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
+import com.stealthyone.mcb.customuserlist.CustomStaffList;
 
-public enum UsageMessage {
+public enum ConfigBoolean {
 
-    STAFFLIST_LIST("/%s list <list alias>");
-	
-	private String message;
-	
-	private UsageMessage(String message) {
-		this.message = message;
-	}
-	
-	public final void sendTo(CommandSender sender, String label) {
-		sender.sendMessage(ChatColor.DARK_RED + "USAGE: " + ChatColor.RED + String.format(message, label));
-	}
-	
+    CHECK_FOR_UPDATES("Check for updates"),
+    DEBUG("Debug"),
+    HIDE_VANISHED("Hide vanished players"),
+    SHOW_EMPTY_GROUPS("Format.Show groups with no one on"),
+    USE_PLAYER_DISP_NAME("Format.Use player display name");
+
+    private String path;
+
+    private ConfigBoolean(String path) {
+        this.path = path;
+    }
+
+    public final boolean getBoolean() {
+        return CustomStaffList.getInstance().getConfig().getBoolean(path);
+    }
+
 }

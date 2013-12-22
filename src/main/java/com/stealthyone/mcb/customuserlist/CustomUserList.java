@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.customstafflist;
+package com.stealthyone.mcb.customuserlist;
 
-import com.stealthyone.mcb.customstafflist.backend.UserListBackend;
-import com.stealthyone.mcb.customstafflist.commands.CmdStaffList;
-import com.stealthyone.mcb.customstafflist.config.ConfigHelper;
-import com.stealthyone.mcb.customstafflist.listeners.PlayerListener;
+import com.stealthyone.mcb.customuserlist.backend.UserListBackend;
+import com.stealthyone.mcb.customuserlist.commands.CmdStaffList;
+import com.stealthyone.mcb.customuserlist.config.ConfigHelper;
+import com.stealthyone.mcb.customuserlist.listeners.PlayerListener;
 import com.stealthyone.mcb.stbukkitlib.lib.hooks.HookHelper;
 import com.stealthyone.mcb.stbukkitlib.lib.messages.MessageRetriever;
 import com.stealthyone.mcb.stbukkitlib.lib.updates.UpdateChecker;
@@ -31,34 +31,34 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CustomStaffList extends JavaPlugin {
+public class CustomUserList extends JavaPlugin {
 
     public final static class Log {
 
         public static void debug(String msg) {
             if (ConfigHelper.DEBUG.getBoolean())
-                instance.logger.log(Level.INFO, String.format("[%s DEBUG] %s", CustomStaffList.getInstance().getName(), msg));
+                instance.logger.log(Level.INFO, String.format("[%s DEBUG] %s", CustomUserList.getInstance().getName(), msg));
         }
 
         public static void info(String msg) {
-            instance.logger.log(Level.INFO, String.format("[%s] %s", CustomStaffList.getInstance().getName(), msg));
+            instance.logger.log(Level.INFO, String.format("[%s] %s", CustomUserList.getInstance().getName(), msg));
         }
 
         public static void warning(String msg) {
-            instance.logger.log(Level.WARNING, String.format("[%s] %s", CustomStaffList.getInstance().getName(), msg));
+            instance.logger.log(Level.WARNING, String.format("[%s] %s", CustomUserList.getInstance().getName(), msg));
         }
 
         public static void severe(String msg) {
-            instance.logger.log(Level.SEVERE, String.format("[%s] %s", CustomStaffList.getInstance().getName(), msg));
+            instance.logger.log(Level.SEVERE, String.format("[%s] %s", CustomUserList.getInstance().getName(), msg));
         }
     }
 
-    private static CustomStaffList instance;
+    private static CustomUserList instance;
     {
         instance = this;
     }
 
-    public final static CustomStaffList getInstance() {
+    public final static CustomUserList getInstance() {
         return instance;
     }
 
@@ -112,7 +112,7 @@ public class CustomStaffList extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 
         /* Register commands */
-        getCommand("customstafflist").setExecutor(new CmdStaffList(this));
+        getCommand("customuserlist").setExecutor(new CmdStaffList(this));
         updateChecker = UpdateChecker.scheduleForMe(this, 54231);
         Log.info(String.format("%s v%s by Stealth2800 enabled.", getName(), getVersion()));
     }

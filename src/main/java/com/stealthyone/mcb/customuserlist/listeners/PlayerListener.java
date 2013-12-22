@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.customstafflist.listeners;
+package com.stealthyone.mcb.customuserlist.listeners;
 
-import com.stealthyone.mcb.customstafflist.CustomStaffList;
+import com.stealthyone.mcb.customuserlist.CustomStaffList;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -37,7 +37,7 @@ public class PlayerListener implements Listener {
     public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
         for (Entry<String, Integer> entry : plugin.getUserListBackend().getRegisteredAliases().entrySet()) {
             if (e.getMessage().startsWith("/" + entry.getKey())) {
-                plugin.getCommand("customstafflist").execute(e.getPlayer(), entry.getKey(), new String[]{});
+                plugin.getCommand("customuserlist").execute(e.getPlayer(), entry.getKey(), new String[]{});
                 e.setCancelled(true);
             }
         }

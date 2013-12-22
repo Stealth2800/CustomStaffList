@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.customstafflist.permissions;
+package com.stealthyone.mcb.customuserlist.permissions;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
@@ -26,7 +26,7 @@ public enum PermissionNode {
 
     ADMIN_RELOAD;
 
-    public final static String PREFIX = "customstafflist.";
+    public final static String PREFIX = "customuserlist.";
 
     private String permission;
 

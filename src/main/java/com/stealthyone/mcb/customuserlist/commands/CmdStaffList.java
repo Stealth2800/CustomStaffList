@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.customstafflist.commands;
+package com.stealthyone.mcb.customuserlist.commands;
 
-import com.stealthyone.mcb.customstafflist.CustomStaffList;
-import com.stealthyone.mcb.customstafflist.backend.userlists.UserList;
-import com.stealthyone.mcb.customstafflist.messages.ErrorMessage;
-import com.stealthyone.mcb.customstafflist.messages.NoticeMessage;
-import com.stealthyone.mcb.customstafflist.messages.UsageMessage;
-import com.stealthyone.mcb.customstafflist.permissions.PermissionNode;
+import com.stealthyone.mcb.customuserlist.CustomStaffList;
+import com.stealthyone.mcb.customuserlist.backend.userlists.UserList;
+import com.stealthyone.mcb.customuserlist.messages.ErrorMessage;
+import com.stealthyone.mcb.customuserlist.messages.NoticeMessage;
+import com.stealthyone.mcb.customuserlist.messages.UsageMessage;
+import com.stealthyone.mcb.customuserlist.permissions.PermissionNode;
 import com.stealthyone.mcb.stbukkitlib.lib.updates.UpdateChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -40,7 +40,7 @@ public final class CmdStaffList implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (label.equalsIgnoreCase("customstafflist")) {
+        if (label.equalsIgnoreCase("customuserlist")) {
             if (args.length > 0) {
                 switch (args[0]) {
                     /* View Userlist command */
