@@ -1,7 +1,7 @@
 /*
- *               The Building Game - Bukkit Plugin
+ * Bukkit plugin: CustomStaffList
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- *               Website: <http://stealthyone.com>
+ * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  */
 package com.stealthyone.mcb.customuserlist.listeners;
 
-import com.stealthyone.mcb.customuserlist.CustomStaffList;
+import com.stealthyone.mcb.customuserlist.CustomUserList;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -27,9 +27,9 @@ import java.util.Map.Entry;
 
 public class PlayerListener implements Listener {
 
-    private CustomStaffList plugin;
+    private CustomUserList plugin;
 
-    public PlayerListener(CustomStaffList plugin) {
+    public PlayerListener(CustomUserList plugin) {
         this.plugin = plugin;
     }
 

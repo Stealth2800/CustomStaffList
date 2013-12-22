@@ -1,7 +1,7 @@
 /*
- *               The Building Game - Bukkit Plugin
+ * Bukkit plugin: CustomStaffList
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- *               Website: <http://stealthyone.com>
+ * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ import org.bukkit.command.CommandSender;
 
 public enum UsageMessage {
 
-    STAFFLIST_LIST("/%s list <list alias>");
+    STAFFLIST_SHOW("/%s show <list alias>");
 	
 	private String message;
 	

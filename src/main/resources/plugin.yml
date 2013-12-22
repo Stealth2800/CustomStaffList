@@ -1,11 +1,11 @@
-name: CustomStaffList
-version: 2.2.1
+name: ${project.name}
+version: ${project.version}
 description: Simple way to display lists of players on the server
 depend: [StBukkitLib]
-softdepend: [VanishNoPacket]
+softdepend: [VanishNoPacket, Vault]
 author: Stealth2800
 website: http://stealthyone.com/bukkit
-main: com.stealthyone.mcb.customstafflist.CustomStaffList
+main: com.stealthyone.mcb.customuserlist.CustomUserList
 commands:
-  customstafflist:
+  customuserlist:
     description: 'Base plugin command'

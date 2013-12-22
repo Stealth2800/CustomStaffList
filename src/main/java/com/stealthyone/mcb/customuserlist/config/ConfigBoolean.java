@@ -1,7 +1,7 @@
 /*
- *               CustomStaffList - Bukkit Plugin
+ * Bukkit plugin: CustomStaffList
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- *              Website: <http://stealthyone.com/>
+ * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  */
 package com.stealthyone.mcb.customuserlist.config;
 
-import com.stealthyone.mcb.customuserlist.CustomStaffList;
+import com.stealthyone.mcb.customuserlist.CustomUserList;
 
 public enum ConfigBoolean {
 
@@ -35,7 +35,7 @@ public enum ConfigBoolean {
     }
 
     public final boolean getBoolean() {
-        return CustomStaffList.getInstance().getConfig().getBoolean(path);
+        return CustomUserList.getInstance().getConfig().getBoolean(path);
     }
 
 }

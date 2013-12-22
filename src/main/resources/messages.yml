@@ -1,6 +1,5 @@
-messages:
-  notices:
-    plugin_reloaded: '{TAG}&aPlugin files reloaded from the disk.'
-  errors:
-    invalid_userlist: '&cUnable to find userlist ''&6%s&c'''
-    no_permission: '&cYou do not have permission to use this command.'
+notices:
+  plugin_reloaded: '{TAG}&aPlugin files reloaded from the disk.'
+errors:
+  invalid_userlist: '&cUnable to find userlist ''&6%s&c'''
+  no_permission: '&cYou do not have permission to use this command.'

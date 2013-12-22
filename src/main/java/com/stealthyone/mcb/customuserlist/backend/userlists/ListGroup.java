@@ -1,7 +1,7 @@
 /*
- *               CustomStaffList - Bukkit Plugin
+ * Bukkit plugin: CustomStaffList
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- *              Website: <http://stealthyone.com/>
+ * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,12 @@
  */
 package com.stealthyone.mcb.customuserlist.backend.userlists;
 
+import com.stealthyone.mcb.customuserlist.CustomUserList;
+import com.stealthyone.mcb.stbukkitlib.api.Stbl;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
+
+import java.util.List;
 
 public class ListGroup {
 
@@ -30,7 +34,11 @@ public class ListGroup {
     }
 
     public String getDisplayName() {
-        return config.getString("display name", config.getName());
+        String name = config.getString("display name", config.getName());
+        if (name.contains("{PREFIX}") && CustomUserList.getInstance().hookedWithVault()) {
+            name = name.replace("{PREFIX}", Stbl.hooks.getVault().getChat().getGroupPrefix((String) null, config.getName()));
+        }
+        return name;
     }
 
     public ChatColor getColor() {
@@ -38,6 +46,14 @@ public class ListGroup {
             return ChatColor.valueOf(config.getString("color"));
         } catch (Exception ex) {
             return ChatColor.WHITE;
+        }
+    }
+
+    public ChatColor getOnlineColor() {
+        try {
+            return ChatColor.valueOf(config.getString("online color"));
+        } catch (Exception ex) {
+            return getColor();
         }
     }
 
@@ -56,5 +72,11 @@ public class ListGroup {
     public boolean ignoreOp() {
         return config.getBoolean("ignore op", true);
     }
+
+    public List<String> getPlayers() {
+        List<String> returnList = config.getStringList("Players");
+        return returnList.size() == 0 ? null : returnList;
+    }
+
 
 }

@@ -1,7 +1,7 @@
 /*
- *               CustomStaffList - Bukkit Plugin
+ * Bukkit plugin: CustomStaffList
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- *              Website: <http://stealthyone.com/>
+ * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,12 +19,14 @@
 package com.stealthyone.mcb.customuserlist;
 
 import com.stealthyone.mcb.customuserlist.backend.UserListBackend;
-import com.stealthyone.mcb.customuserlist.commands.CmdStaffList;
+import com.stealthyone.mcb.customuserlist.commands.CmdUserList;
 import com.stealthyone.mcb.customuserlist.config.ConfigHelper;
 import com.stealthyone.mcb.customuserlist.listeners.PlayerListener;
-import com.stealthyone.mcb.stbukkitlib.lib.hooks.HookHelper;
-import com.stealthyone.mcb.stbukkitlib.lib.messages.MessageRetriever;
-import com.stealthyone.mcb.stbukkitlib.lib.updates.UpdateChecker;
+import com.stealthyone.mcb.stbukkitlib.api.Stbl;
+import com.stealthyone.mcb.stbukkitlib.lib.messages.MessageManager;
+import com.stealthyone.mcb.stbukkitlib.lib.updating.UpdateChecker;
+import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -64,9 +66,10 @@ public class CustomUserList extends JavaPlugin {
 
     private Logger logger;
 
-    private boolean vanishHook;
+    private boolean vanishHook = false;
+    private boolean vaultHook = false;
 
-    private MessageRetriever messageManager;
+    private MessageManager messageManager;
     private UpdateChecker updateChecker;
 
     private UserListBackend userListBackend;
@@ -85,26 +88,21 @@ public class CustomUserList extends JavaPlugin {
         saveConfig();
 
         /* Setup hooks */
-        vanishHook = HookHelper.hookVanishNoPacket();
-        if (vanishHook) {
-            String vanishVersion = getServer().getPluginManager().getPlugin("VanishNoPacket").getDescription().getVersion();
-            Log.info(String.format("Successfully hooked with VanishNoPacket v%s", vanishVersion));
-        } else {
-            Log.info("Didn't find VanishNoPacket.");
-        }
-
-        /* Check config value for hiding vanished players */
-        if (ConfigHelper.HIDE_VANISHED.getBoolean()) {
-            if (!vanishHook)
-                Log.info("Config has 'Hide vanished players' set to TRUE but VanishNoPacket is not installed!");
-            else
-                Log.info("Hiding vanished players ENABLED.");
-        } else {
-            Log.info("Hiding vanished players DISABLED.");
+        vanishHook = Stbl.hooks.validateHook(this, "VanishNoPacket");
+        if (Stbl.hooks.validateHook(this, "Vault")) {
+            Permission permission = Stbl.hooks.getVault().getPermission();
+            Chat chat = Stbl.hooks.getVault().getChat();
+            if (permission != null && chat != null) {
+                Log.info("Prefix support enabled, hooked with " + permission.getName() + " via Vault");
+                vaultHook = true;
+            } else {
+                Log.info("Permission group prefix support disabled, unable to find Vault permission and/or chat backend");
+                vaultHook = false;
+            }
         }
 
         /* Setup important plugin components */
-        messageManager = new MessageRetriever(this);
+        messageManager = new MessageManager(this);
 
         userListBackend = new UserListBackend(this);
 
@@ -112,7 +110,8 @@ public class CustomUserList extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 
         /* Register commands */
-        getCommand("customuserlist").setExecutor(new CmdStaffList(this));
+        getCommand("customuserlist").setExecutor(new CmdUserList(this));
+
         updateChecker = UpdateChecker.scheduleForMe(this, 54231);
         Log.info(String.format("%s v%s by Stealth2800 enabled.", getName(), getVersion()));
     }
@@ -131,7 +130,7 @@ public class CustomUserList extends JavaPlugin {
         return this.getDescription().getVersion();
     }
 
-    public MessageRetriever getMessageManager() {
+    public MessageManager getMessageManager() {
         return messageManager;
     }
 
@@ -141,6 +140,14 @@ public class CustomUserList extends JavaPlugin {
 
     public UserListBackend getUserListBackend() {
         return userListBackend;
+    }
+
+    public boolean hookedWithVanish() {
+        return vanishHook;
+    }
+
+    public boolean hookedWithVault() {
+        return vaultHook;
     }
 
 }

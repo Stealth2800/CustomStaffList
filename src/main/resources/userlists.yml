@@ -3,49 +3,58 @@ Staff:
     - stafflist
     - staff
     - modlist
-  permission: customstafflist.list.staff
+  permission: customuserlist.list.staff
   Groups:
+    Owner:
+      display name: 'Owner'
+      color: DARK_RED
+      ignore op: true
+      name color: RED
+      online color: GREEN
+      Players:
+        - Stealth2800
     Admin:
       display name: 'Admin'
       color: RED
-      permission: 'customstafflist.group.admin'
+      permission: 'customuserlist.group.admin'
       ignore op: true
       name color: YELLOW
     Moderator:
       display name: 'Mod'
       color: GREEN
-      permission: 'customstafflist.group.mod'
-      ignore op = true
+      permission: 'customuserlist.group.mod'
+      ignore op: true
       name color: BLUE
   Format:
     header: '&8<============================>'
     name: '&8------&6Online Staff Members&8------'
-    group format: '&6[{GROUPNAME}&6]&f '
+    group: '&6[{GROUPNAME}&6]&f '
     footer: '&8<============================>'
-    none online message: '&c&oNone online.'
-    use player display names: false
-    limit players to one group: true
+    none online: '&c&oNone online.'
+    display names: false
+    limit to one group: true
+    hide vanished: true
 Donors:
   aliases:
     - donorlist
     - donors
-  permission: customstafflist.list.donors
+  permission: customuserlist.list.donors
   Groups:
     Donor1:
       display name: '$5 donor'
       color: GREEN
-      ignore op = true
-      permission: 'customstafflist.group.donor1'
+      ignore op: true
+      permission: 'customuserlist.group.donor1'
     Donor2:
       display name: '$10 donor'
       color: BLUE
-      ignore op = true
-      permission: 'customstafflist.group.donor2'
+      ignore op: true
+      permission: 'customuserlist.group.donor2'
   Format:
     header: '&8<============================>'
     name: '&8-------&6Online Donors&8-------'
-    group format: '&6[{GROUPNAME}&6]&f '
+    group: '&6[{GROUPNAME}&6]&f '
     footer: '&8<============================>'
-    none online message: '&c&oNone online.'
-    use player display names: false
-    limit players to one group: true
+    none online: '&c&oNone online.'
+    display names: false
+    limit to one group: true

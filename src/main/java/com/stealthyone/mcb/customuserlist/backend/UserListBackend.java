@@ -1,7 +1,7 @@
 /*
- *               CustomStaffList - Bukkit Plugin
+ * Bukkit plugin: CustomStaffList
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- *              Website: <http://stealthyone.com/>
+ * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
  */
 package com.stealthyone.mcb.customuserlist.backend;
 
-import com.stealthyone.mcb.customuserlist.CustomStaffList;
-import com.stealthyone.mcb.customuserlist.CustomStaffList.Log;
+import com.stealthyone.mcb.customuserlist.CustomUserList;
+import com.stealthyone.mcb.customuserlist.CustomUserList.Log;
 import com.stealthyone.mcb.customuserlist.backend.userlists.UserList;
 import com.stealthyone.mcb.stbukkitlib.lib.storage.YamlFileManager;
 import com.stealthyone.mcb.stbukkitlib.lib.utils.FileUtils;
@@ -27,24 +27,29 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class UserListBackend {
 
-    private CustomStaffList plugin;
+    private CustomUserList plugin;
 
     private YamlFileManager userlistFile;
     private Map<Integer, UserList> loadedUserLists = new HashMap<Integer, UserList>();
     private Map<String, Integer> registeredAliases = new HashMap<String, Integer>();
 
-    public UserListBackend(CustomStaffList plugin) {
+    public UserListBackend(CustomUserList plugin) {
         this.plugin = plugin;
         userlistFile = new YamlFileManager(plugin.getDataFolder() + File.separator + "userlists.yml");
         if (userlistFile.isEmpty()) {
             Log.info("Creating default userlists.yml file");
-            FileUtils.copyGenericFileFromJar(plugin, "userlists.yml");
+            try {
+                FileUtils.copyFileFromJar(plugin, "userlists.yml");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             userlistFile.reloadConfig();
         }
         Log.info("Loaded " + reloadUserLists() + " user lists.");
@@ -91,6 +96,10 @@ public class UserListBackend {
         Integer listId = registeredAliases.get(alias.toLowerCase());
         if (listId == null) return null;
         return loadedUserLists.get(listId);
+    }
+
+    public Map<Integer, UserList> getAllUserLists() {
+        return loadedUserLists;
     }
 
     public Map<String, Integer> getRegisteredAliases() {

@@ -1,7 +1,7 @@
 /*
- *               CustomStaffList - Bukkit Plugin
+ * Bukkit plugin: CustomStaffList
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- *              Website: <http://stealthyone.com/>
+ * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ public class UserListFormat {
     }
 
     public String getGroupNameFormat() {
-        return ChatColor.translateAlternateColorCodes('&', config.getString("Format.group format", DEFAULT_GROUP_FORMAT));
+        return ChatColor.translateAlternateColorCodes('&', config.getString("Format.group", DEFAULT_GROUP_FORMAT));
     }
 
     public String getFooter() {
@@ -54,15 +54,19 @@ public class UserListFormat {
     }
 
     public String getNoneOnlineMessage() {
-        return ChatColor.translateAlternateColorCodes('&', config.getString("Format.none online message", DEFAULT_NONE_ONLINE));
+        return ChatColor.translateAlternateColorCodes('&', config.getString("Format.none online", DEFAULT_NONE_ONLINE));
     }
 
     public boolean useDisplayNames() {
-        return config.getBoolean("Format.use player display names", DEFAULT_USE_DISPLAY_NAMES);
+        return config.getBoolean("Format.display names", DEFAULT_USE_DISPLAY_NAMES);
     }
 
     public boolean limitPlayersToOneGroup() {
-        return config.getBoolean("Format.limit players to one group", DEFAULT_LIMIT_TO_ONE_GROUP);
+        return config.getBoolean("Format.limit to one group", DEFAULT_LIMIT_TO_ONE_GROUP);
+    }
+
+    public boolean hideVanished() {
+        return config.getBoolean("hide vanished", true);
     }
 
 }

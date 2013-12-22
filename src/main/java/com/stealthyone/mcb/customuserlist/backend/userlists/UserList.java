@@ -1,7 +1,7 @@
 /*
- *               CustomStaffList - Bukkit Plugin
+ * Bukkit plugin: CustomStaffList
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- *              Website: <http://stealthyone.com/>
+ * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,9 +18,12 @@
  */
 package com.stealthyone.mcb.customuserlist.backend.userlists;
 
-import com.stealthyone.mcb.customuserlist.CustomStaffList.Log;
-import com.stealthyone.mcb.customuserlist.backend.hooks.VanishHelper;
+import com.stealthyone.mcb.customuserlist.CustomUserList;
+import com.stealthyone.mcb.customuserlist.CustomUserList.Log;
 import com.stealthyone.mcb.customuserlist.permissions.PermissionNode;
+import com.stealthyone.mcb.stbukkitlib.api.Stbl;
+import com.stealthyone.mcb.stbukkitlib.backend.exceptions.UnloadedHookException;
+import com.stealthyone.mcb.stbukkitlib.backend.hooks.VanishNoPacketHook;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -72,10 +75,18 @@ public class UserList {
     }
 
     public List<String> constructList() {
-        List<String> returnList = new ArrayList<String>();
+        CustomUserList plugin = CustomUserList.getInstance();
+        VanishNoPacketHook vanish;
+        try {
+            vanish = Stbl.hooks.getVanishNoPacket();
+        } catch (UnloadedHookException ex) {
+            vanish = null;
+        }
+
+        List<String> returnList = new ArrayList<>();
         Player[] onlinePlayers = Bukkit.getOnlinePlayers();
         boolean useDisplayNames = format.useDisplayNames();
-        List<String> addedNames = new ArrayList<String>();
+        List<String> addedNames = new ArrayList<>();
 
         /* Add header */
         String header = format.getHeader();
@@ -92,13 +103,25 @@ public class UserList {
             /* Check players */
             StringBuilder playerList = new StringBuilder();
             String permission = group.getPermission();
-            for (Player player : onlinePlayers) {
-                if (PermissionNode.checkCustomPermission(permission, player, group.ignoreOp())) {
-                    if (VanishHelper.isPlayerVanished(player)) continue;
-                    String playerName = useDisplayNames ? player.getDisplayName() : player.getName();
-                    if (format.limitPlayersToOneGroup() && addedNames.contains(playerName)) continue;
-                    addedNames.add(playerName);
-                    playerList.append(group.getNameColor() + (playerList.length() > 0 ? ", " + playerName : playerName));
+
+            List<String> persistentPlayers = group.getPlayers();
+            if (persistentPlayers == null) {
+                for (Player player : onlinePlayers) {
+                    if (PermissionNode.checkCustomPermission(permission, player, group.ignoreOp())) {
+                        if (plugin.hookedWithVanish() && format.hideVanished() && vanish.isPlayerVanished(player)) continue;
+                        String playerName = useDisplayNames ? player.getDisplayName() : player.getName();
+                        if (format.limitPlayersToOneGroup() && addedNames.contains(playerName)) continue;
+                        addedNames.add(playerName);
+                        if (playerList.length() > 0) playerList.append(", ");
+                        playerList.append(group.getNameColor()).append(playerName);
+                    }
+                }
+            } else {
+                for (String name : persistentPlayers) {
+                    boolean playerOnline = Bukkit.getOfflinePlayer(name).isOnline();
+                    if (plugin.hookedWithVanish() && playerOnline && format.hideVanished() && vanish.isPlayerVanished(Bukkit.getPlayerExact(name))) continue;
+                    if (playerList.length() > 0) playerList.append(", ");
+                    playerList.append(playerOnline ? group.getOnlineColor() : group.getColor()).append(name);
                 }
             }
 

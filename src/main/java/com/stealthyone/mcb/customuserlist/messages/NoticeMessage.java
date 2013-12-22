@@ -1,7 +1,7 @@
 /*
- *               The Building Game - Bukkit Plugin
+ * Bukkit plugin: CustomStaffList
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- *               Website: <http://stealthyone.com>
+ * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,73 +18,43 @@
  */
 package com.stealthyone.mcb.customuserlist.messages;
 
-import com.stealthyone.mcb.customuserlist.CustomStaffList;
-import com.stealthyone.mcb.stbukkitlib.lib.messages.IMessagePath;
-import com.stealthyone.mcb.stbukkitlib.lib.messages.MessageRetriever;
-import org.bukkit.ChatColor;
+import com.stealthyone.mcb.customuserlist.CustomUserList;
+import com.stealthyone.mcb.stbukkitlib.lib.messages.MessageReferencer;
 import org.bukkit.command.CommandSender;
 
-public enum NoticeMessage implements IMessagePath {
+public enum NoticeMessage implements MessageReferencer {
 
     PLUGIN_RELOADED;
-
-	private final String PREFIX = "messages.notices.";
 	
 	private String path;
-	private boolean isList;
-	
-	private NoticeMessage() {
-		this(false);
-	}
-	
-	private NoticeMessage(boolean isList) {
-		this.path = this.toString().toLowerCase();
-		this.isList = isList;
-	}
-	
-	@Override
-	public final String getPrefix() {
-		return PREFIX;
-	}
 
-	@Override
-	public final String getMessagePath() {
-		return this.path;
-	}
-	
-	@Override
-	public final boolean isList() {
-		return this.isList;
-	}
-
-    public final String getMessage() {
-        MessageRetriever messageRetriever = CustomStaffList.getInstance().getMessageManager();
-        String[] messages = messageRetriever.getMessage(this);
-        return messages[0];
+    private NoticeMessage() {
+        this.path = "notices." + toString().toLowerCase();
     }
 
-    public final String getMessage(String... replacements) {
-        MessageRetriever messageRetriever = CustomStaffList.getInstance().getMessageManager();
-        String[] messages = messageRetriever.getMessage(this);
-        return String.format(messages[0].replace("{TAG}", messageRetriever.getTag()), replacements);
+    @Override
+    public String getMessagePath() {
+        return path;
     }
 
-	public final void sendTo(CommandSender sender) {
-		MessageRetriever messageRetriever = CustomStaffList.getInstance().getMessageManager();
-		String[] messages = messageRetriever.getMessage(this);
-		
-		for (String message : messages) {
-			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message.replace("{TAG}", messageRetriever.getTag())));
-		}
-	}
-	
-	public final void sendTo(CommandSender sender, String... replacements) {
-		MessageRetriever messageRetriever = CustomStaffList.getInstance().getMessageManager();
-		String[] messages = messageRetriever.getMessage(this);
-		
-		for (String message : messages) {
-			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(message.replace("{TAG}", messageRetriever.getTag()), (Object[]) replacements)));
-		}
-	}
+    @Override
+    public String getMessage() {
+        return CustomUserList.getInstance().getMessageManager().getMessage(this);
+    }
+
+    @Override
+    public String getMessage(String... replacements) {
+        return CustomUserList.getInstance().getMessageManager().getMessage(this, replacements);
+    }
+
+    @Override
+    public void sendTo(CommandSender sender) {
+        sender.sendMessage(getMessage().split("\n"));
+    }
+
+    @Override
+    public void sendTo(CommandSender sender, String... replacements) {
+        sender.sendMessage(getMessage(replacements).split("\n"));
+    }
 	
 }

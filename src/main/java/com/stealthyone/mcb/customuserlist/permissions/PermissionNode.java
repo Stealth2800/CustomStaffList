@@ -1,7 +1,7 @@
 /*
- *               CustomStaffList - Bukkit Plugin
+ * Bukkit plugin: CustomStaffList
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- *              Website: <http://stealthyone.com/>
+ * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,14 +24,13 @@ import org.bukkit.permissions.PermissionDefault;
 
 public enum PermissionNode {
 
-    ADMIN_RELOAD;
-
-    public final static String PREFIX = "customuserlist.";
+    ADMIN_RELOAD,
+    LIST;
 
     private String permission;
 
     private PermissionNode() {
-        permission = PREFIX + this.toString().toLowerCase().replace("_", ".");
+        permission = "customuserlist." + this.toString().toLowerCase().replace("_", ".");
     }
 
     public final String getPermission() {
@@ -46,12 +45,12 @@ public enum PermissionNode {
         return ignoreOp ? sender.hasPermission(new Permission(permission, PermissionDefault.FALSE)) : isAllowed(sender);
     }
 
-    public final static boolean checkCustomPermission(String customPerm, CommandSender sender) {
+    public static boolean checkCustomPermission(String customPerm, CommandSender sender) {
         if (customPerm == null || customPerm.equalsIgnoreCase("")) return true;
         return sender.hasPermission(customPerm);
     }
 
-    public final static boolean checkCustomPermission(String customPerm, CommandSender sender, boolean ignoreOp) {
+    public static boolean checkCustomPermission(String customPerm, CommandSender sender, boolean ignoreOp) {
         if (customPerm == null || customPerm.equalsIgnoreCase("")) return true;
         return ignoreOp ? sender.hasPermission(new Permission(customPerm, PermissionDefault.FALSE)) : checkCustomPermission(customPerm, sender);
     }
