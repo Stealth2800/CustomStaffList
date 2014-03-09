@@ -8,7 +8,6 @@ Staff:
     Owner:
       display name: 'Owner'
       color: DARK_RED
-      ignore op: true
       name color: RED
       online color: GREEN
       Players:
