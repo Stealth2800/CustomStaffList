@@ -37,6 +37,9 @@ public class ListGroup {
         if (name.contains("{PREFIX}") && CustomUserList.getInstance().hookedWithVault()) {
             name = name.replace("{PREFIX}", CustomUserList.getInstance().getVaultChat().getGroupPrefix((String) null, config.getName()));
         }
+        if (name.contains("{SUFFIX}") && CustomUserList.getInstance().hookedWithVault()) {
+            name = name.replace("{SUFFIX}", CustomUserList.getInstance().getVaultChat().getGroupSuffix((String) null, config.getName()));
+        }
         return name;
     }
 
