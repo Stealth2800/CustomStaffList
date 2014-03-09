@@ -64,6 +64,7 @@ public class UserListBackend {
     public int reloadUserLists() {
         registeredAliases.clear();
         loadedUserLists.clear();
+        userlistFile.reloadConfig();
         FileConfiguration userlistConfig = userlistFile.getConfig();
         PluginCommand command = plugin.getCommand("customuserlist");
         command.getAliases().clear();
