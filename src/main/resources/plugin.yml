@@ -1,7 +1,7 @@
 name: ${project.name}
 version: ${project.version}
 description: Simple way to display lists of players on the server
-depend: [StBukkitLib]
+depend: []
 softdepend: [VanishNoPacket, Vault]
 author: Stealth2800
 website: http://stealthyone.com/bukkit

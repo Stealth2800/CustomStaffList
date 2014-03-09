@@ -1,5 +1,8 @@
-notices:
-  plugin_reloaded: '{TAG}&aPlugin files reloaded from the disk.'
+tag: '&6[{PLUGINNAME}] '
 errors:
   invalid_userlist: '&cUnable to find userlist ''&6%s&c'''
   no_permission: '&cYou do not have permission to use this command.'
+notices:
+  plugin_reloaded: '{TAG}&aPlugin files reloaded from the disk.'
+usages:
+  stafflist_show: '{TAG}&c/%s show <list alias>'

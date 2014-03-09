@@ -19,7 +19,6 @@
 package com.stealthyone.mcb.customuserlist.backend.userlists;
 
 import com.stealthyone.mcb.customuserlist.CustomUserList;
-import com.stealthyone.mcb.stbukkitlib.api.Stbl;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -36,7 +35,7 @@ public class ListGroup {
     public String getDisplayName() {
         String name = config.getString("display name", config.getName());
         if (name.contains("{PREFIX}") && CustomUserList.getInstance().hookedWithVault()) {
-            name = name.replace("{PREFIX}", Stbl.hooks.getVault().getChat().getGroupPrefix((String) null, config.getName()));
+            name = name.replace("{PREFIX}", CustomUserList.getInstance().getVaultChat().getGroupPrefix((String) null, config.getName()));
         }
         return name;
     }

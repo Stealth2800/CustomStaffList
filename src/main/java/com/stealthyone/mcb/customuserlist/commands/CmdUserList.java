@@ -24,7 +24,7 @@ import com.stealthyone.mcb.customuserlist.messages.ErrorMessage;
 import com.stealthyone.mcb.customuserlist.messages.NoticeMessage;
 import com.stealthyone.mcb.customuserlist.messages.UsageMessage;
 import com.stealthyone.mcb.customuserlist.permissions.PermissionNode;
-import com.stealthyone.mcb.stbukkitlib.lib.updating.UpdateChecker;
+import com.stealthyone.mcb.customuserlist.utils.UpdateChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -132,12 +132,12 @@ public final class CmdUserList implements CommandExecutor {
      * Plugin version
      */
     private void cmdVersion(CommandSender sender, Command command, String label, String[] args) {
-        sender.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GOLD + " v" + plugin.getVersion());
+        sender.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GOLD + " v" + plugin.getDescription().getVersion());
         sender.sendMessage(ChatColor.GOLD + "Created by Stealth2800");
         sender.sendMessage(ChatColor.GOLD + "Website: " + ChatColor.AQUA + "http://stealthyone.com/bukkit");
         UpdateChecker updateChecker = plugin.getUpdateChecker();
         if (updateChecker.checkForUpdates()) {
-            String curVer = plugin.getVersion();
+            String curVer = plugin.getDescription().getVersion();
             String remVer = updateChecker.getNewVersion().replace("v", "");
             sender.sendMessage(ChatColor.RED + "A different version was found on BukkitDev! (Current: " + curVer + " | Remote: " + remVer + ")");
             sender.sendMessage(ChatColor.RED + "You can download it from " + updateChecker.getVersionLink());

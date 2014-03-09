@@ -21,13 +21,12 @@ package com.stealthyone.mcb.customuserlist;
 import com.stealthyone.mcb.customuserlist.backend.UserListBackend;
 import com.stealthyone.mcb.customuserlist.commands.CmdUserList;
 import com.stealthyone.mcb.customuserlist.config.ConfigHelper;
-import com.stealthyone.mcb.customuserlist.listeners.PlayerListener;
-import com.stealthyone.mcb.stbukkitlib.api.Stbl;
-import com.stealthyone.mcb.stbukkitlib.lib.messages.MessageManager;
-import com.stealthyone.mcb.stbukkitlib.lib.updating.UpdateChecker;
+import com.stealthyone.mcb.customuserlist.utils.MessageManager;
+import com.stealthyone.mcb.customuserlist.utils.UpdateChecker;
 import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -38,7 +37,7 @@ public class CustomUserList extends JavaPlugin {
     public final static class Log {
 
         public static void debug(String msg) {
-            if (ConfigHelper.DEBUG.getBoolean())
+            if (ConfigHelper.DEBUG.get())
                 instance.logger.log(Level.INFO, String.format("[%s DEBUG] %s", CustomUserList.getInstance().getName(), msg));
         }
 
@@ -66,8 +65,9 @@ public class CustomUserList extends JavaPlugin {
 
     private Logger logger;
 
-    private boolean vanishHook = false;
+    private boolean hookVanish = false;
     private boolean vaultHook = false;
+    private Chat vaultChat;
 
     private MessageManager messageManager;
     private UpdateChecker updateChecker;
@@ -88,17 +88,36 @@ public class CustomUserList extends JavaPlugin {
         saveConfig();
 
         /* Setup hooks */
-        vanishHook = Stbl.hooks.validateHook(this, "VanishNoPacket");
-        if (Stbl.hooks.validateHook(this, "Vault")) {
-            Permission permission = Stbl.hooks.getVault().getPermission();
-            Chat chat = Stbl.hooks.getVault().getChat();
-            if (permission != null && chat != null) {
-                Log.info("Prefix support enabled, hooked with " + permission.getName() + " via Vault");
+        try {
+            Class.forName("org.kitteh.vanish.VanishPlugin");
+            Plugin vanishPlugin = Bukkit.getPluginManager().getPlugin("VanishNoPacket");
+            if (vanishPlugin != null) {
+                hookVanish = true;
+                Log.info("Found dependency: VanishNoPacket v" + vanishPlugin.getDescription().getVersion());
+            }
+        } catch (Exception ex) {
+            Log.warning("Unable to find optional dependency: VanishNoPacket.");
+            Log.warning("Permission group prefix support disabled, unable to find Vault permission and/or chat backend");
+        }
+
+        try {
+            Class.forName("net.milkbowl.vault.Vault");
+
+            RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
+            if (chatProvider != null) {
+                vaultChat = chatProvider.getProvider();
+            }
+
+            if (vaultChat != null) {
+                Log.info("Prefix support enabled, hooked with " + vaultChat.getName() + " via Vault");
                 vaultHook = true;
             } else {
-                Log.info("Permission group prefix support disabled, unable to find Vault permission and/or chat backend");
+                Log.info("Permission group prefix support disabled, unable to find Vault chat backend");
                 vaultHook = false;
             }
+        } catch (Exception ex) {
+            getLogger().warning("Unable to find optional dependency: Vault");
+            Log.info("Permission group prefix support disabled, unable to find Vault chat backend");
         }
 
         /* Setup important plugin components */
@@ -107,27 +126,23 @@ public class CustomUserList extends JavaPlugin {
         userListBackend = new UserListBackend(this);
 
         /* Register listeners */
-        Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
+        //Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this); /* May be removed */
 
         /* Register commands */
         getCommand("customuserlist").setExecutor(new CmdUserList(this));
 
         updateChecker = UpdateChecker.scheduleForMe(this, 54231);
-        Log.info(String.format("%s v%s by Stealth2800 enabled.", getName(), getVersion()));
+        Log.info(String.format("%s v%s by Stealth2800 enabled.", getName(), getDescription().getVersion()));
     }
 
     @Override
     public void onDisable() {
-        Log.info(String.format("%s v%s by Stealth2800 disabled.", getName(), getVersion()));
+        Log.info(String.format("%s v%s by Stealth2800 disabled.", getName(), getDescription().getVersion()));
     }
 
     public void reloadAll() {
         reloadConfig();
         getUserListBackend().reloadUserLists();
-    }
-
-    public String getVersion() {
-        return this.getDescription().getVersion();
     }
 
     public MessageManager getMessageManager() {
@@ -143,11 +158,15 @@ public class CustomUserList extends JavaPlugin {
     }
 
     public boolean hookedWithVanish() {
-        return vanishHook;
+        return hookVanish;
     }
 
     public boolean hookedWithVault() {
         return vaultHook;
+    }
+
+    public Chat getVaultChat() {
+        return vaultChat;
     }
 
 }

@@ -19,10 +19,9 @@
 package com.stealthyone.mcb.customuserlist.messages;
 
 import com.stealthyone.mcb.customuserlist.CustomUserList;
-import com.stealthyone.mcb.stbukkitlib.lib.messages.MessageReferencer;
 import org.bukkit.command.CommandSender;
 
-public enum ErrorMessage implements MessageReferencer {
+public enum ErrorMessage {
 
     INVALID_USERLIST,
 	NO_PERMISSION;
@@ -33,27 +32,22 @@ public enum ErrorMessage implements MessageReferencer {
         this.path = "errors." + toString().toLowerCase();
     }
 
-    @Override
     public String getMessagePath() {
         return path;
     }
 
-    @Override
     public String getMessage() {
-        return CustomUserList.getInstance().getMessageManager().getMessage(this);
+        return CustomUserList.getInstance().getMessageManager().getMessage(path);
     }
 
-    @Override
     public String getMessage(String... replacements) {
-        return CustomUserList.getInstance().getMessageManager().getMessage(this, replacements);
+        return CustomUserList.getInstance().getMessageManager().getMessage(path, replacements);
     }
 
-    @Override
     public void sendTo(CommandSender sender) {
         sender.sendMessage(getMessage().split("\n"));
     }
 
-    @Override
     public void sendTo(CommandSender sender, String... replacements) {
         sender.sendMessage(getMessage(replacements).split("\n"));
     }

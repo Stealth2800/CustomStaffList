@@ -21,12 +21,10 @@ package com.stealthyone.mcb.customuserlist.backend.userlists;
 import com.stealthyone.mcb.customuserlist.CustomUserList;
 import com.stealthyone.mcb.customuserlist.CustomUserList.Log;
 import com.stealthyone.mcb.customuserlist.permissions.PermissionNode;
-import com.stealthyone.mcb.stbukkitlib.api.Stbl;
-import com.stealthyone.mcb.stbukkitlib.backend.exceptions.UnloadedHookException;
-import com.stealthyone.mcb.stbukkitlib.backend.hooks.VanishNoPacketHook;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.kitteh.vanish.VanishPlugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,14 +72,18 @@ public class UserList {
         return config.getString("permission");
     }
 
+    public boolean checkVanish(Player player) {
+        if (!CustomUserList.getInstance().hookedWithVanish()) {
+            return false;
+        } else if (!format.hideVanished()) {
+            return false;
+        } else {
+            return ((VanishPlugin) Bukkit.getPluginManager().getPlugin("VanishNoPacket")).getManager().isVanished(player);
+        }
+    }
+
     public List<String> constructList() {
         CustomUserList plugin = CustomUserList.getInstance();
-        VanishNoPacketHook vanish;
-        try {
-            vanish = Stbl.hooks.getVanishNoPacket();
-        } catch (UnloadedHookException ex) {
-            vanish = null;
-        }
 
         List<String> returnList = new ArrayList<>();
         Player[] onlinePlayers = Bukkit.getOnlinePlayers();
@@ -108,7 +110,7 @@ public class UserList {
             if (persistentPlayers == null) {
                 for (Player player : onlinePlayers) {
                     if (PermissionNode.checkCustomPermission(permission, player, group.ignoreOp())) {
-                        if (plugin.hookedWithVanish() && format.hideVanished() && vanish.isPlayerVanished(player)) continue;
+                        if (checkVanish(player)) continue;
                         String playerName = useDisplayNames ? player.getDisplayName() : player.getName();
                         if (format.limitPlayersToOneGroup() && addedNames.contains(playerName)) continue;
                         addedNames.add(playerName);
@@ -119,7 +121,7 @@ public class UserList {
             } else {
                 for (String name : persistentPlayers) {
                     boolean playerOnline = Bukkit.getOfflinePlayer(name).isOnline();
-                    if (plugin.hookedWithVanish() && playerOnline && format.hideVanished() && vanish.isPlayerVanished(Bukkit.getPlayerExact(name))) continue;
+                    if (playerOnline && checkVanish(Bukkit.getPlayerExact(name))) continue;
                     if (playerList.length() > 0) playerList.append(", ");
                     playerList.append(playerOnline ? group.getOnlineColor() : group.getColor()).append(name);
                 }

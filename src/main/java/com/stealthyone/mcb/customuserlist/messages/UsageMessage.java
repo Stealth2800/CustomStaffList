@@ -18,21 +18,37 @@
  */
 package com.stealthyone.mcb.customuserlist.messages;
 
-import org.bukkit.ChatColor;
+import com.stealthyone.mcb.customuserlist.CustomUserList;
 import org.bukkit.command.CommandSender;
 
 public enum UsageMessage {
 
-    STAFFLIST_SHOW("/%s show <list alias>");
-	
-	private String message;
-	
-	private UsageMessage(String message) {
-		this.message = message;
-	}
-	
-	public final void sendTo(CommandSender sender, String label) {
-		sender.sendMessage(ChatColor.DARK_RED + "USAGE: " + ChatColor.RED + String.format(message, label));
-	}
+    STAFFLIST_SHOW;
+
+    private String path;
+
+    private UsageMessage() {
+        this.path = "usages." + toString().toLowerCase();
+    }
+
+    public String getMessagePath() {
+        return path;
+    }
+
+    public String getMessage() {
+        return CustomUserList.getInstance().getMessageManager().getMessage(path);
+    }
+
+    public String getMessage(String... replacements) {
+        return CustomUserList.getInstance().getMessageManager().getMessage(path, replacements);
+    }
+
+    public void sendTo(CommandSender sender) {
+        sender.sendMessage(getMessage().split("\n"));
+    }
+
+    public void sendTo(CommandSender sender, String... replacements) {
+        sender.sendMessage(getMessage(replacements).split("\n"));
+    }
 	
 }
