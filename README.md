@@ -1,4 +1,4 @@
-CustomStaffList
+CustomUserList
 ===============
 
-Bukkit Plugin - Simple way to create a list of online staff members for players
+Bukkit Plugin - Simple way to create lists for different categories of online users
