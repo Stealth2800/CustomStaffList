@@ -83,8 +83,6 @@ public class UserList {
     }
 
     public List<String> constructList() {
-        CustomUserList plugin = CustomUserList.getInstance();
-
         List<String> returnList = new ArrayList<>();
         Player[] onlinePlayers = Bukkit.getOnlinePlayers();
         boolean useDisplayNames = format.useDisplayNames();
