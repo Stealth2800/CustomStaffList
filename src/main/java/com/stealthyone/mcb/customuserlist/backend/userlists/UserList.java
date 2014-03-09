@@ -110,8 +110,8 @@ public class UserList {
                     if (PermissionNode.checkCustomPermission(permission, player, group.ignoreOp())) {
                         if (checkVanish(player)) continue;
                         String playerName = useDisplayNames ? player.getDisplayName() : player.getName();
-                        if (format.limitPlayersToOneGroup() && addedNames.contains(playerName)) continue;
-                        addedNames.add(playerName);
+                        if (format.limitPlayersToOneGroup() && addedNames.contains(player.getName().toLowerCase())) continue;
+                        addedNames.add(player.getName().toLowerCase());
                         if (playerList.length() > 0) playerList.append(", ");
                         playerList.append(group.getNameColor()).append(playerName);
                     }
@@ -119,9 +119,10 @@ public class UserList {
             } else {
                 for (String name : persistentPlayers) {
                     boolean playerOnline = Bukkit.getOfflinePlayer(name).isOnline();
-                    if (playerOnline && checkVanish(Bukkit.getPlayerExact(name))) continue;
+                    if (playerOnline && checkVanish(Bukkit.getPlayerExact(name))) playerOnline = false;
                     if (playerList.length() > 0) playerList.append(", ");
                     playerList.append(playerOnline ? group.getOnlineColor() : group.getColor()).append(name);
+                    addedNames.add(name.toLowerCase());
                 }
             }
 
