@@ -70,7 +70,7 @@ public final class CmdUserList implements CommandExecutor {
             }
             cmdVersion(sender, cmd, label, args);
         } else {
-            UserList userList = plugin.getUserListBackend().getUserList(label);
+            UserList userList = plugin.getUserListBackend().getUserList(label.replaceFirst("userlist:", ""));
             if (userList == null) {
                 sender.sendMessage(ChatColor.RED + "ERROR - you shouldn't be seeing this...");
             } else if (!PermissionNode.checkCustomPermission(userList.getPermission(), sender)) {
