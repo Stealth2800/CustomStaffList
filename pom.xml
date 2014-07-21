@@ -6,7 +6,7 @@
 
     <groupId>com.stealthyone.mcb</groupId>
     <artifactId>customuserlist</artifactId>
-    <version>2.4.2</version>
+    <version>2.4.3</version>
     <name>CustomUserList</name>
     <url>http://stealthyone.com/bukkit</url>
 
@@ -37,6 +37,11 @@
             <id>vault-repo</id>
             <url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
         </repository>
+
+        <repository>
+            <id>kitteh-repo</id>
+            <url>http://repo.kitteh.org/content/groups/public</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -47,9 +52,9 @@
         </dependency>
 
         <dependency>
-            <groupId>unmanaged.bukkit</groupId>
-            <artifactId>vanishnopacket</artifactId>
-            <version>3.18.9</version>
+            <groupId>org.kitteh</groupId>
+            <artifactId>VanishNoPacket</artifactId>
+            <version>3.19.1</version>
         </dependency>
 
         <dependency>
